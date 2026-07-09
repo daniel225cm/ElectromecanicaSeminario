@@ -1,0 +1,53 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="brand-box">
+      <i class="fa-solid fa-user-plus"></i>
+      <h1>Crear usuario</h1>
+      <p>Electromecánica Seminario</p>
+    </div>
+
+    <form (ngSubmit)="registrar()">
+      <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="usuario.nombre"
+          name="nombre"
+          placeholder="Nombre completo"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Correo electrónico</label>
+        <input
+          type="email"
+          class="form-control"
+          [(ngModel)]="usuario.correo"
+          name="correo"
+          placeholder="usuario@seminario.com"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Contraseña</label>
+        <input
+          type="password"
+          class="form-control"
+          [(ngModel)]="usuario.password"
+          name="password"
+          placeholder="Mínimo 6 caracteres"
+        />
+      </div>
+
+      <button class="btn btn-primary w-100" type="submit">
+        Crear cuenta
+      </button>
+    </form>
+
+    <div class="auth-link">
+      <span>¿Ya tienes cuenta?</span>
+      <a routerLink="/login">Iniciar sesión</a>
+    </div>
+  </div>
+</div>

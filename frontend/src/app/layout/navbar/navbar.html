@@ -1,0 +1,18 @@
+<nav class="topbar">
+  <div>
+    <h2>Panel Administrativo</h2>
+    <span>Gestión interna del taller</span>
+  </div>
+
+  <div class="user-box">
+    <div class="user-info">
+      <strong>{{ usuario?.nombre || 'Usuario' }}</strong>
+      <small>{{ usuario?.rol || 'ADMIN' }}</small>
+    </div>
+
+    <button class="btn-logout" (click)="cerrarSesion()">
+      <i class="fa-solid fa-right-from-bracket"></i>
+      Salir
+    </button>
+  </div>
+</nav>

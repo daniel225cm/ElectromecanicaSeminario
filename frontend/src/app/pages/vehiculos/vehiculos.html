@@ -1,0 +1,105 @@
+<section class="page">
+  <div class="page-header">
+    <div>
+      <h1>Vehículos</h1>
+      <p>Registro de vehículos vinculados a clientes</p>
+    </div>
+
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vehiculoModal" (click)="nuevoVehiculo()">
+      <i class="fa-solid fa-plus"></i>
+      Nuevo vehículo
+    </button>
+  </div>
+
+  <div class="card-box">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input class="form-control" placeholder="Buscar por placa, marca, modelo o cliente" [(ngModel)]="busqueda" />
+    </div>
+
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Placa</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Año</th>
+            <th>Cliente</th>
+            <th class="text-end">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let v of vehiculosFiltrados">
+            <td>{{ v.id }}</td>
+            <td><span class="badge-plate">{{ v.placa }}</span></td>
+            <td>{{ v.marca }}</td>
+            <td>{{ v.modelo }}</td>
+            <td>{{ v.anio }}</td>
+            <td>{{ v.cliente?.nombre }}</td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#vehiculoModal" (click)="editarVehiculo(v)">
+                Editar
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="eliminarVehiculo(v.id!)">
+                Eliminar
+              </button>
+            </td>
+          </tr>
+
+          <tr *ngIf="vehiculosFiltrados.length === 0">
+            <td colspan="7" class="text-center text-muted">No hay vehículos registrados.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="vehiculoModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ editando ? 'Editar vehículo' : 'Nuevo vehículo' }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Placa</label>
+          <input class="form-control" [(ngModel)]="vehiculo.placa" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Marca</label>
+          <input class="form-control" [(ngModel)]="vehiculo.marca" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Modelo</label>
+          <input class="form-control" [(ngModel)]="vehiculo.modelo" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Año</label>
+          <input type="number" class="form-control" [(ngModel)]="vehiculo.anio" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Cliente</label>
+          <select class="form-select" [(ngModel)]="vehiculo.clienteId">
+            <option [ngValue]="0">Seleccione un cliente</option>
+            <option *ngFor="let c of clientes" [ngValue]="c.id">{{ c.nombre }} - {{ c.cedula }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-primary" data-bs-dismiss="modal" (click)="guardarVehiculo()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>

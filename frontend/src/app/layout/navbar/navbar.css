@@ -1,0 +1,54 @@
+.topbar {
+  height: 72px;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topbar h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.topbar span {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.user-box {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.user-info strong {
+  color: #0f172a;
+}
+
+.user-info small {
+  color: #64748b;
+}
+
+.btn-logout {
+  border: none;
+  background: #ef4444;
+  color: white;
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.btn-logout i {
+  margin-right: 6px;
+}

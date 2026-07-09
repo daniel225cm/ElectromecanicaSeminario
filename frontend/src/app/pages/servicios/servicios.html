@@ -1,0 +1,124 @@
+<section class="page">
+  <div class="page-header">
+    <div>
+      <h1>Servicios</h1>
+      <p>Control de trabajos y mantenimientos realizados</p>
+    </div>
+
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#servicioModal" (click)="nuevoServicio()">
+      <i class="fa-solid fa-plus"></i>
+      Nuevo servicio
+    </button>
+  </div>
+
+  <div class="card-box">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input class="form-control" placeholder="Buscar por servicio, estado, placa o vehículo" [(ngModel)]="busqueda" />
+    </div>
+
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Vehículo</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Costo</th>
+            <th class="text-end">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let s of serviciosFiltrados">
+            <td>{{ s.id }}</td>
+            <td>{{ s.tipo }}</td>
+            <td>
+              {{ s.vehiculo?.placa }} -
+              {{ s.vehiculo?.marca }}
+              {{ s.vehiculo?.modelo }}
+            </td>
+            <td>{{ s.fecha }}</td>
+            <td>
+              <span class="badge-status" [class.finalizado]="s.estado === 'Finalizado'" [class.proceso]="s.estado === 'En proceso'">
+                {{ s.estado }}
+              </span>
+            </td>
+            <td>${{ s.costo }}</td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#servicioModal" (click)="editarServicio(s)">
+                Editar
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="eliminarServicio(s.id!)">
+                Eliminar
+              </button>
+            </td>
+          </tr>
+
+          <tr *ngIf="serviciosFiltrados.length === 0">
+            <td colspan="7" class="text-center text-muted">No hay servicios registrados.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="servicioModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ editando ? 'Editar servicio' : 'Nuevo servicio' }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Tipo de servicio</label>
+            <input class="form-control" [(ngModel)]="servicio.tipo" placeholder="Diagnóstico eléctrico" />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Fecha</label>
+            <input type="date" class="form-control" [(ngModel)]="servicio.fecha" />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Costo</label>
+            <input type="number" class="form-control" [(ngModel)]="servicio.costo" />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Estado</label>
+            <select class="form-select" [(ngModel)]="servicio.estado">
+              <option *ngFor="let estado of estados" [ngValue]="estado">{{ estado }}</option>
+            </select>
+          </div>
+
+          <div class="col-md-12 mb-3">
+            <label class="form-label">Vehículo</label>
+            <select class="form-select" [(ngModel)]="servicio.vehiculoId">
+              <option [ngValue]="0">Seleccione un vehículo</option>
+              <option *ngFor="let v of vehiculos" [ngValue]="v.id">
+                {{ v.placa }} - {{ v.marca }} {{ v.modelo }} / {{ v.cliente?.nombre }}
+              </option>
+            </select>
+          </div>
+
+          <div class="col-md-12 mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea rows="3" class="form-control" [(ngModel)]="servicio.descripcion"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-primary" data-bs-dismiss="modal" (click)="guardarServicio()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>

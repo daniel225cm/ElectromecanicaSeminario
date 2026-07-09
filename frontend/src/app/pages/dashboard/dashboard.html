@@ -1,0 +1,83 @@
+<section class="dashboard">
+  <div class="page-header">
+    <div>
+      <h1>Dashboard</h1>
+      <p>Resumen general de Electromecánica Seminario</p>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="icon blue"><i class="fa-solid fa-users"></i></div>
+      <div>
+        <span>Clientes</span>
+        <h2>{{ totalClientes }}</h2>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="icon dark"><i class="fa-solid fa-car"></i></div>
+      <div>
+        <span>Vehículos</span>
+        <h2>{{ totalVehiculos }}</h2>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="icon orange"><i class="fa-solid fa-gears"></i></div>
+      <div>
+        <span>Servicios</span>
+        <h2>{{ totalServicios }}</h2>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="icon green"><i class="fa-solid fa-dollar-sign"></i></div>
+      <div>
+        <span>Ingresos</span>
+        <h2>${{ ingresos.toFixed(2) }}</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-header">
+      <h3>Últimos servicios registrados</h3>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Vehículo</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Costo</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let servicio of ultimosServicios">
+            <td>{{ servicio.tipo }}</td>
+            <td>
+              {{ servicio.vehiculo?.marca }}
+              {{ servicio.vehiculo?.modelo }}
+            </td>
+            <td>{{ servicio.fecha }}</td>
+            <td>
+              <span class="badge-status">{{ servicio.estado }}</span>
+            </td>
+            <td>${{ servicio.costo }}</td>
+          </tr>
+
+          <tr *ngIf="ultimosServicios.length === 0">
+            <td colspan="5" class="text-center text-muted">
+              No hay servicios registrados.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

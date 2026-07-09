@@ -1,0 +1,123 @@
+<section class="page">
+  <div class="page-header">
+    <div>
+      <h1>Clientes</h1>
+      <p>Administración de clientes del taller</p>
+    </div>
+
+    <button
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#clienteModal"
+      (click)="nuevoCliente()"
+    >
+      <i class="fa-solid fa-plus"></i>
+      Nuevo cliente
+    </button>
+  </div>
+
+  <div class="card-box">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Buscar por nombre, cédula, teléfono o correo"
+        [(ngModel)]="busqueda"
+      />
+    </div>
+
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Cédula</th>
+            <th>Teléfono</th>
+            <th>Correo</th>
+            <th class="text-end">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let c of clientesFiltrados">
+            <td>{{ c.id }}</td>
+            <td>{{ c.nombre }}</td>
+            <td>{{ c.cedula }}</td>
+            <td>{{ c.telefono }}</td>
+            <td>{{ c.correo }}</td>
+            <td class="text-end">
+              <button
+                class="btn btn-sm btn-outline-primary me-2"
+                data-bs-toggle="modal"
+                data-bs-target="#clienteModal"
+                (click)="editarCliente(c)"
+              >
+                Editar
+              </button>
+
+              <button
+                class="btn btn-sm btn-outline-danger"
+                (click)="eliminarCliente(c.id!)"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
+
+          <tr *ngIf="clientesFiltrados.length === 0">
+            <td colspan="6" class="text-center text-muted">
+              No hay clientes registrados.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="clienteModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {{ editando ? 'Editar cliente' : 'Nuevo cliente' }}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Nombre</label>
+          <input class="form-control" [(ngModel)]="cliente.nombre" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Cédula</label>
+          <input class="form-control" [(ngModel)]="cliente.cedula" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Teléfono</label>
+          <input class="form-control" [(ngModel)]="cliente.telefono" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Correo</label>
+          <input class="form-control" [(ngModel)]="cliente.correo" />
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+
+        <button class="btn btn-primary" data-bs-dismiss="modal" (click)="guardarCliente()">
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
