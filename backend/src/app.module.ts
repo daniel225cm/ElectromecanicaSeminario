@@ -25,6 +25,10 @@ import { DatabaseModule } from './database/database.module';
       database: process.env.DB_NAME,
       autoLoadEntities: true,
       synchronize: true,
+      ssl:
+        process.env.NODE_ENV === 'production'
+          ? { rejectUnauthorized: false }
+          : false,
     }),
 
     DatabaseModule,
