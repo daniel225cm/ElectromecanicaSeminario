@@ -11,7 +11,7 @@ import { LoginResponse, Usuario } from '../models/usuario.model';
 export class Auth {
   private readonly http = inject(HttpClient);
   private readonly platformId = inject(PLATFORM_ID);
-  private readonly api = 'http://localhost:3000';
+  private readonly api = 'https://electromecanica-backend.onrender.com';
 
   private esNavegador(): boolean {
     return isPlatformBrowser(this.platformId);

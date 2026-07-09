@@ -3,24 +3,32 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Vehiculo } from '../models/vehiculo.model';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root',
+})
 export class Vehiculos {
   private http = inject(HttpClient);
-  private api = 'http://localhost:3000/vehiculos';
+
+  private apiUrl =
+    'https://electromecanica-backend.onrender.com/vehiculos';
 
   listar(): Observable<Vehiculo[]> {
-    return this.http.get<Vehiculo[]>(this.api);
+    return this.http.get<Vehiculo[]>(this.apiUrl);
+  }
+
+  buscar(id: number): Observable<Vehiculo> {
+    return this.http.get<Vehiculo>(`${this.apiUrl}/${id}`);
   }
 
   crear(vehiculo: Vehiculo): Observable<Vehiculo> {
-    return this.http.post<Vehiculo>(this.api, vehiculo);
+    return this.http.post<Vehiculo>(this.apiUrl, vehiculo);
   }
 
   actualizar(id: number, vehiculo: Vehiculo): Observable<Vehiculo> {
-    return this.http.patch<Vehiculo>(`${this.api}/${id}`, vehiculo);
+    return this.http.patch<Vehiculo>(`${this.apiUrl}/${id}`, vehiculo);
   }
 
-  eliminar(id: number): Observable<any> {
-    return this.http.delete(`${this.api}/${id}`);
+  eliminar(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
